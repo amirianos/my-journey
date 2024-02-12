@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: 'amirianos.ir'
+    container_name: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://amirianos.ir'
+        registry_external_url 'http://registry.amirianos.ir'
+    ports:
+      - '80:80'
+      - '443:443'
+      - '5555:5555'
+      - '1122:22'
+    volumes:
+      - './config:/etc/gitlab'
+      - 'gitlab-logs-without-ssl:/var/log/gitlab'
+      - 'gitlab-data-without-ssl:/var/opt/gitlab'
+volumes:
+  gitlab-logs-without-ssl:
+    external: true
+  gitlab-data-without-ssl:
+    external: true
+

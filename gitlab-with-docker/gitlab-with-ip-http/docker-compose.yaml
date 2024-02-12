@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    container_name: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://213.176.28.222'
+        registry_external_url 'http://213.176.28.222'
+    ports:
+      - '80:80'
+      - '443:443'
+      - '5555:5555'
+      - '1122:22'
+    volumes:
+      - './config:/etc/gitlab'
+      - 'gitlab-logs-withip:/var/log/gitlab'
+      - 'gitlab-data-withip:/var/opt/gitlab'
+volumes:
+  gitlab-logs-withip:
+    external: true
+  gitlab-data-withip:
+    external: true
+

@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: 'amirianos.ir'
+    container_name: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://amirianos.ir'
+        registry_external_url 'https://registry.amirianos.ir'
+        gitlab_rails['gitlab_shell_ssh_port']=30022
+        registry_nginx['enable'] = true
+        registry_nginx['listen_port'] = 5555
+        registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/gitlab.crt"
+        registry_nginx['ssl_certificate_key'] =  "/etc/gitlab/ssl/gitlab.key"
+    ports:
+      - '80:80'
+      - '443:443'
+      - '5555:5555'
+      - '1122:22'
+    volumes:
+      - './config:/etc/gitlab'
+      - 'gitlab-logs:/var/log/gitlab'
+      - 'gitlab-data:/var/opt/gitlab'
+      - './ssl:/etc/gitlab/ssl'
+volumes:
+  gitlab-logs:
+    external: true
+  gitlab-data:
+    external: true
+
