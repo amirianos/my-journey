@@ -1,0 +1,4 @@
+#check prometheus config syntax
+
+promtool check config /config file/
+promtool check rule /rule file/
