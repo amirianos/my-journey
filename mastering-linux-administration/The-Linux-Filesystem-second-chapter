@@ -1,0 +1,82 @@
+Editor tricks
+:/ = enter search mode; this searches forward in your file
+:? = enter search mode; this searcher backward in your file
+
+-----------------------------------------------------------
+linux file systems
+-----------------------------------------------------------
+If you use the touch command back-to-back, only the timestamp will change . page 60
+ls -l = long listing format
+we have 3 type of time in ls command:
+1- modification time: represent change and modification time in content of file ===> ls -l
+2- access time: represent last read and access to file content time ===> ls -lu
+3- change time: change time refers to last time the files meradata(permisinos ownership etc) was changed ===> ls -lc
+
+Note : if your times dosent change even if you run cat command on file, check fstab file
+in some cases for prevent system performance from decreasing, you can add noatime in fstab file. with this config os dosent check last update time frequently
+
+Links in linux
+at all we have two type of links in linux. symbolic link and hard link
+symbolic link create with "ln -s source target"
+hard link create with "ln source target"
+these are some diffrents:
+1-Symlink can span accros devices while hardlink cannot
+2-If the path or name of the source file changes, a symlink becomes broken, whereas a hard link continues to function properly
+3-In hardlink source and target file has same inode number but in symlink source and target file has diffrent inode number and seperate commpletly
+
+
+Head
+head command can show some lines from beggining of text file
+"head filename" => show 10 line from beggining of file
+"head -n NUMBER filename" => show some lines from beggining of file
+
+
+Stat
+This command provides you with all the information about a file at once.
+
+File types in linux:
+d = directory
+- = file
+s = socket
+b = block device
+l = symlink
+c = character device
+p = pipe
+
+Pipe and Socket in linux?
+In summary, both pipes and sockets are used for interprocess communication, but pipes have a limitation and cannot communicate over a network, while sockets function properly in this regard.
+
+Tar
+tar -cvf file-archive.tar files/
+if you wana add compression to commands above: tar -czvf filename.tar.gz ./files/
+
+Find
+find / -type f -name "file*.*"
+find / -type f \( -name "*.c" -o -name "*.sh" -o -name "*.py*"\)
+find / -type f -perm 0644
+find / -perm /u=r => have read only permission
+find / -type f -mtime 2 => find all file inside the root directory that were modified 2 days ago
+find / -type f -atime 2 => find all file inside the root directory that were accessed 2 days ago
+find / -type f -mtime +2 -mtime -5 => find all the files that have been modifies in the last 2 to 5 days
+find / -type f -cmin -10 => find all the files that have been created in the last 10 minute
+find / -type f -size +5M -size -10M
+find /etc -type f -exec ls -s {} \; | sort -n | head -5 => find 5 largest file in /etc directory
+To compress all configuration files located in the /etc directory => find /etc -type f -name '*.conf' -exec tar -rvf testtar.tar {} \;
+
+Grep
+find last time the sudo command was used => grep sudo /var/log/auth.log
+search for the packt string inside text files => grep -R packt /etc
+if you want to display the model of your cpu, you could use the following command:
+cat /proc/cpuinfo | grep -i 'Model' => -i is for ignore-case
+
+Wc
+wc -l filename => this command gives us the number of lines inside of a file
+
+Sed
+sed 's/^/   /g' filename => this command add three space at the begining of lines inside of a files
+s stands for substitiution
+g stands for global
+
+Awk
+awk is much more than a simple command.it is a pattern-matching language.
+yum list installed | awk '{print $1}' | wc -l => show number of installed packages
