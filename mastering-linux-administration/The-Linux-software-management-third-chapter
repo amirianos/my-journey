@@ -1,0 +1,18 @@
+chapter3 - linux software management
+beside Deb and rpm packcages, there are two new package types that have been recently introduced,
+the snap packages developes by ubuntu and flatpak package developed by large community of developers and organizations.
+
+what does a DEB package consist of?
+first of all we download a simple deb package with following command: 
+wget https://downloads.slack-edge.com/linux_releases/slack-desktop-4.8.0-amd64.deb
+
+then extract .deb file with ar command.ar command extract .a file formats:
+ar x PACKAGE_NAME
+
+as you can see we have four files:
+debian_binary 
+control.tar.gz
+data.tar.xz : consists of configuration files that are necessary to run the application
+
+
+we have flatpak and snap alongside of DEB and RPM.these packages designed to run every app in an isolate envirnement.
