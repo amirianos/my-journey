@@ -1,0 +1,67 @@
+There is three type of users in linux:
+1- Normal user : genral purpose and everyday user accounts
+2- system users: these are similar to reqular user accounts except the may lack a login
+shell or a home directory
+3- superusers : these are privilaged user accounts with full access to system resources
+
+in linux only the root user and users with sudo privilages can create modify or delete 
+user accounts
+
+
+Creating users
+#)adduser amir
+cat /etc/passwd : the "x" character that you see in /etc/passwd file represent 
+encrypted password
+
+passwords saved in /etc/shadow file
+
+you can check if a Linux user has sudo privilages using following command; sudo -v
+if after running sudo -v command it prompts you for a password,it means that your user has
+sudoer privilages
+
+for add a new user to sudoer list run the following commands:
+sudo visudo
+add this line :::> USERNAME ALL=(ALL) {/usr/bin/vim - ALL}
+
+sudo -v command validate user again
+
+for show add users list run this command: 
+cat /etc/passwd | cut -d: -f1 | column
+
+
+usermod -d /local/amir -m -s /bin/bash amir :::> this command chege home directory to /local/amir
+also -s represent selected shell for this user and -m represent move all files in old home directory to new one
+
+the following command restrict user to SSH access. usermod -L amir
+and the following command with restore systemaccess for the user : usermod -U amir
+
+
+as you can see you can edit sudoer file with more safety with visudo , we can edit users detail with
+"vipw" command
+
+Delete user
+for delete a user only run this command : userdell -f(force) -r(delete home directory) amir
+
+for edit /etc/shadow file you can use "vipw -s" command
+
+ls -l :::>
+ten character . first one represent file type and nine other represent permissions
+first three character represent user owner permissions
+second three character represent group owner permissions
+third three character represent all other users permissions
+
+file types in linux:
+d : directory
+p : pipe
+s : socket
+l : softlink
+- : regular file
+b : block device
+c : character device similar to a block device
+
+change ownership of a file
+chmod u-w,o+x,ug+r filename
+chmod 775 filename
+
+to create no login user :::> useradd -M (--no-create-home) --shell /bin/false USERNAME
+
